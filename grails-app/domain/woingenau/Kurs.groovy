@@ -2,8 +2,8 @@ package woingenau
 
 class Kurs {
 	
-	String owner
 	String name
+	String owner
 	String info
 	static hasMany = [termine: Termin]
 
