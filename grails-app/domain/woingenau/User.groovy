@@ -1,10 +1,13 @@
-package Woingenau
+package woingenau
 
 class User {
 
 	transient springSecurityService
 
 	String username
+	String firstname
+	String lastname
+	String email
 	String password
 	boolean enabled = true
 	boolean accountExpired
@@ -14,7 +17,9 @@ class User {
 	static transients = ['springSecurityService']
 
 	static constraints = {
-		username blank: false, unique: true
+		username size: 4..15, blank: false, unique: true
+		firstname blank: false
+		lastname blank: false
 		password blank: false
 	}
 

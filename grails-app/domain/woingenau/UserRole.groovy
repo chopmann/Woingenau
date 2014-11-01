@@ -1,4 +1,4 @@
-package Woingenau
+package woingenau
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
