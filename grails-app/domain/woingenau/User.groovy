@@ -14,6 +14,8 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 
+    static hasMany = [owned: Course, created: Course]
+    static mappedBy = [owned: 'owner', created: 'creator']
 	static transients = ['springSecurityService']
 
 	static constraints = {

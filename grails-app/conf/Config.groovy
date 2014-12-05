@@ -11,6 +11,10 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 grails.plugin.springsecurity.ui.encondePassword = true
+grails.plugin.springsecurity.roleHierarchy = '''
+   ROLE_ADMIN > ROLE_TEACHER
+   ROLE_TEACHER > ROLE_USER
+'''
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.interceptUrlMap = [
 	'/':                  ['permitAll'],
@@ -28,6 +32,8 @@ grails.plugin.springsecurity.interceptUrlMap = [
 	'/home/**':           ['ROLE_ADMIN'],
 	'/role/**':			  ['ROLE_ADMIN'],
 	'/user/**':			  ['ROLE_ADMIN'],
+    '/course/**':         ['ROLE_USER'],
+    '/appointment/**':    ['ROLE_USER'],
 	'/finance/**':        ['ROLE_FINANCE', 'isFullyAuthenticated()'],
  ]
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
