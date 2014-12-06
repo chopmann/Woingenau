@@ -14,8 +14,9 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 
-    static hasMany = [owned: Course, created: Course]
-    static mappedBy = [owned: 'owner', created: 'creator']
+    static belongsTo = Course
+    static hasMany = [lecturerOf: Course, creatorOf: Course]
+    static mappedBy = [lecturerOf: 'lecturer', creatorOf: 'creator']
 	static transients = ['springSecurityService']
 
 	static constraints = {
@@ -23,6 +24,7 @@ class User {
 		firstname blank: false
 		lastname blank: false
 		password blank: false
+        //courses nullable: true
 	}
 
 	static mapping = {

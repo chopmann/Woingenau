@@ -6,5 +6,7 @@ class Appointment {
     String place
     static belongsTo = [course: Course]
     static constraints = {
+        start blank: true
+        end blank: true
     }
 }
