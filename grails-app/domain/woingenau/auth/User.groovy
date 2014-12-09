@@ -1,4 +1,6 @@
-package woingenau
+package woingenau.auth
+
+import woingenau.Course
 
 class User {
 

@@ -1,4 +1,4 @@
-package woingenau
+package woingenau.auth
 
 class Role {
 

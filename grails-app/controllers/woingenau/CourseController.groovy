@@ -1,71 +1,64 @@
 package woingenau
 
-
+import grails.rest.RestfulController
+import woingenau.auth.User
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
-class CourseController {
+@Transactional()
+class CourseController extends RestfulController {
 
     static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Course.list(params), [status: OK]
+    CourseController() {
+        super(Course)
     }
 
-    @Transactional
     def save() {
-/*        if (courseInstance == null) {
-            render status: NOT_FOUND
-            return
-        }*/
-        def jsonObj = request.JSON
-        def appointments = [] as Set
-        jsonObj.appointments.each{
-            println it
-            appointments << new Appointment(it, start: new Date(), end: new Date())
-
+        def courseData = request.JSON
+        def course = new Course()
+        course.title = courseData.title
+        course.creator = User.get(courseData.creator.id)
+        course.lecturer = User.get(courseData.lecturer.id)
+        courseData.members.each{memberData ->
+            course.addToMembers(User.get(memberData.id))
         }
-        Course courseInstance = new Course(jsonObj)
-        courseInstance.validate()
-        if (courseInstance.hasErrors()) {
-            render courseInstance.errors
-            return
+        courseData.appointments.each{appointmentData ->
+            def appointment = new Appointment(appointmentData)
+            course.addToAppointments(appointment)
         }
-        courseInstance.save flush:true
-        respond courseInstance, [status: CREATED]
-    }
-
-
-    @Transactional
-    def update(Course courseInstance) {
-        if (courseInstance == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        courseInstance.validate()
-        if (courseInstance.hasErrors()) {
+        course.validate()
+        if(course.hasErrors()) {
+            log.debug(course.errors)
             render status: NOT_ACCEPTABLE
             return
+        } else {
+            course.save(flush: true)
+            respond course, [status: CREATED]
         }
 
-        courseInstance.save flush:true
-        respond courseInstance, [status: OK]
     }
 
-    @Transactional
-    def delete(Course courseInstance) {
-
-        if (courseInstance == null) {
+    def update() {
+        def courseData = request.JSON
+        log.debug('CourseID: ' + params.id)
+        def course = Course.get(params.id)
+        if (course == null) {
             render status: NOT_FOUND
             return
         }
-
-        courseInstance.delete flush:true
-        render status: NO_CONTENT
+        course.title = courseData.title
+        course.creator = User.get(courseData.creator.id)
+        course.lecturer = User.get(courseData.lecturer.id)
+        course.validate()
+        if(course.hasErrors()) {
+            log.debug(course.errors)
+            render status: NOT_ACCEPTABLE
+            return
+        } else {
+            course.save(flush: true)
+            respond course, [status: OK]
+        }
     }
 }

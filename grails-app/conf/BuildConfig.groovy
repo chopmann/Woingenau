@@ -45,6 +45,7 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
 		mavenRepo "http://repo.spring.io/milestone/"
+        mavenRepo "http://repo.grails.org/grails/core"
     }
 
     dependencies {
@@ -52,6 +53,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
+        compile 'commons-beanutils:commons-beanutils:1.8.3'
     }
 
     plugins {
@@ -63,7 +65,9 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.7'
         compile ":asset-pipeline:1.9.6"
 		compile ':spring-security-core:2.0-RC4'
-		compile ":spring-security-ui:1.0-RC2"
+        compile ":marshallers:0.6"
+        compile ":gson:1.1.4"
+
 //		compile ":spring-security-acl:2.0-RC1"
 
         // plugins needed at runtime but not for compilation
@@ -80,5 +84,6 @@ grails.project.dependency.resolution = {
 		
 		//Bootstrap Plugin
 		runtime ':twitter-bootstrap:3.2.0.2'
+
     }
 }

@@ -1,104 +1,56 @@
 package woingenau
 
-
-
-import static org.springframework.http.HttpStatus.*
+import grails.rest.RestfulController
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
-class AppointmentController {
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
+import static org.springframework.http.HttpStatus.NOT_FOUND
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
+@Transactional()
+class AppointmentController extends RestfulController{
+
+    static responseFormats = ['json', 'xml']
+
+    AppointmentController(){
+        super(Appointment)
+    }
+    def index() {
+        if(params.courseId) {
+            log.debug('CourseID: '+ params.courseId)
+            respond Course.get(params.courseId)?.appointments
+        } else {
+            render status: NOT_FOUND
+        }
     }
 
-    def show(Appointment appointmentInstance) {
-        respond appointmentInstance
-    }
-
-    def create() {
-        respond new Appointment(params)
-    }
-
-    @Transactional
-    def save(Appointment appointmentInstance) {
-        if (appointmentInstance == null) {
-            notFound()
+    def save() {
+        log.debug('CourseID: ' + params.courseId)
+        def course = Course.get(params.courseId)
+        if (course == null) {
+            render status: NOT_FOUND
             return
         }
-
-        if (appointmentInstance.hasErrors()) {
-            respond appointmentInstance.errors, view:'create'
+        def aData = request.JSON
+        def sd = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'")
+        def appointment = new Appointment()
+        appointment.place = aData.place[0]
+        appointment.start = sd.parse(aData.start[0])
+        appointment.end = sd.parse(aData.end[0])
+        course.addToAppointments(appointment)
+        appointment.validate()
+        if(appointment.hasErrors()) {
+            log.debug(appointment.errors)
+            render status: NOT_ACCEPTABLE
             return
+        } else {
+            appointment.save(flush: true)
+            respond appointment, [status: CREATED]
         }
 
-        appointmentInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'appointment.label', default: 'Appointment'), appointmentInstance.id])
-                redirect appointmentInstance
-            }
-            '*' { respond appointmentInstance, [status: CREATED] }
-        }
     }
 
-    def edit(Appointment appointmentInstance) {
-        respond appointmentInstance
-    }
-
-    @Transactional
-    def update(Appointment appointmentInstance) {
-        if (appointmentInstance == null) {
-            notFound()
-            return
-        }
-
-        if (appointmentInstance.hasErrors()) {
-            respond appointmentInstance.errors, view:'edit'
-            return
-        }
-
-        appointmentInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-                redirect appointmentInstance
-            }
-            '*'{ respond appointmentInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Appointment appointmentInstance) {
-
-        if (appointmentInstance == null) {
-            notFound()
-            return
-        }
-
-        appointmentInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'appointment.label', default: 'Appointment'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

@@ -17,24 +17,24 @@ grails.plugin.springsecurity.roleHierarchy = '''
 '''
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.interceptUrlMap = [
-	'/':                  ['permitAll'],
+	'/**':                  ['permitAll'],
 	'/index':             ['permitAll'],
 	'/index.gsp':         ['permitAll'],
-	'/assets/**':         ['permitAll'],
-	'/**/js/**':          ['permitAll'],
-	'/**/css/**':         ['permitAll'],
-	'/**/images/**':      ['permitAll'],
-	'/**/favicon.ico':    ['permitAll'],
-	'/plugins/**':		  ['permitAll'],
-	'/login/**':          ['permitAll'],
-	'/logout/**':         ['permitAll'],
-	'/secure/**':         ['permitAll'],
-	'/home/**':           ['ROLE_ADMIN'],
-	'/role/**':			  ['ROLE_ADMIN'],
-	'/user/**':			  ['ROLE_ADMIN'],
-    '/course/**':         ['permitAll'],
-    '/appointment/**':    ['ROLE_USER'],
-	'/finance/**':        ['ROLE_FINANCE', 'isFullyAuthenticated()'],
+	'/assets*':         ['permitAll'],
+	'js*':          ['permitAll'],
+	'css*':         ['permitAll'],
+	'images*':      ['permitAll'],
+	'favicon.ico':    ['permitAll'],
+	'/plugins*':		  ['permitAll'],
+	'/login*':          ['permitAll'],
+	'/logout*':         ['permitAll'],
+	'/secure*':         ['permitAll'],
+/*	'/home*':           ['ROLE_ADMIN'],
+	'/role*':			  ['ROLE_ADMIN'],
+	'/user*':			  ['ROLE_ADMIN'],
+    '/courses*':         ['permitAll'],
+    '/appointments*':    ['ROLE_USER'],
+	'/finance*':        ['ROLE_FINANCE', 'isFullyAuthenticated()'],*/
  ]
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
@@ -86,6 +86,8 @@ grails {
 
 
 grails.converters.encoding = "UTF-8"
+grails.databinding.dateFormats = ["yyyy-MM-dd'T'hh:mm:ss'Z'"]
+
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
@@ -140,26 +142,19 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
     debug 'org.springframework.security'
+    debug 'grails.app'
 }
 grails.plugin.springsecurity.useSecurityEventListener = true
 grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
    println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
 }
 
-// Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'Woingenau.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'Woingenau.UserRole'
-grails.plugin.springsecurity.authority.className = 'Woingenau.Role'
-
-
 grails.plugin.springsecurity.password.algorithm='SHA-512'
 
-
-
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'woingenau.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'woingenau.UserRole'
-grails.plugin.springsecurity.authority.className = 'woingenau.Role'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'woingenau.auth.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'woingenau.auth.UserRole'
+grails.plugin.springsecurity.authority.className = 'woingenau.auth.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['permitAll'],
 	'/index':                         ['permitAll'],

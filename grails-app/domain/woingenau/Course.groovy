@@ -1,5 +1,8 @@
 package woingenau
+import grails.rest.Resource
+import woingenau.auth.User
 
+@Resource()
 class Course {
 
     String title
@@ -10,5 +13,10 @@ class Course {
         title blank: false
         creator blank: false
         lecturer blank: false
+    }
+    static marshalling={
+        shouldOutputVersion false
+        shouldOutputClass false
+        deep 'appointments'
     }
 }

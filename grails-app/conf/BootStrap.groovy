@@ -1,12 +1,34 @@
-import woingenau.Role
-import woingenau.User
-import woingenau.UserRole
+import woingenau.auth.Role
+import woingenau.auth.User
+import woingenau.auth.UserRole
 import woingenau.Course
 import woingenau.Appointment
+import grails.converters.JSON
 
 class BootStrap {
 
     def init = { servletContext ->
+
+        JSON.registerObjectMarshaller(Appointment) { Appointment appointment ->
+            [
+                    id: appointment.id,
+                    place: appointment.place,
+                    start: appointment.start,
+                    end: appointment.end,
+            ]
+        }
+
+        JSON.createNamedConfig('thin') {
+            it.registerObjectMarshaller( User ) { User user ->
+                return [
+                        id: user.id,
+                        username: user.username,
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        enabled: user.enabled
+                ]
+            }
+        }
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def teacher = new Role(authority: 'ROLE_TEACHER').save(flush: true)
