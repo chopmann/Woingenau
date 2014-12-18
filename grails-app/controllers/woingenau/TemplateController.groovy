@@ -1,7 +1,6 @@
 package woingenau
 
 
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -15,9 +14,9 @@ class TemplateController {
         params.max = Math.min(max ?: 10, 100)
         def tProperties = Template.metaClass.properties*.name
         def templateList = Template.withCriteria {
-            and{
-                params.each {prop, value ->
-                    if(tProperties.grep(prop) && value) {
+            and {
+                params.each { prop, value ->
+                    if (tProperties.grep(prop) && value) {
                         log.debug("${prop} : ${value}")
                         ilike(prop, value)
                     }
@@ -44,7 +43,7 @@ class TemplateController {
             return
         }
 
-        templateInstance.save flush:true
+        templateInstance.save flush: true
         respond templateInstance, [status: CREATED]
     }
 
@@ -61,7 +60,7 @@ class TemplateController {
             return
         }
 
-        templateInstance.save flush:true
+        templateInstance.save flush: true
         respond templateInstance, [status: OK]
     }
 
@@ -73,7 +72,7 @@ class TemplateController {
             return
         }
 
-        templateInstance.delete flush:true
+        templateInstance.delete flush: true
         render status: NO_CONTENT
     }
 }

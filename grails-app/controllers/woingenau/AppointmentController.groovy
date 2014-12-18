@@ -2,13 +2,8 @@ package woingenau
 
 import grails.rest.RestfulController
 import grails.transaction.Transactional
-
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-
-import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
-import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.*
 
 @Transactional()
 class AppointmentController extends RestfulController{
@@ -36,20 +31,20 @@ class AppointmentController extends RestfulController{
         }
         def aData = request.JSON
         def sd = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'")
-        def appointment = new Appointment()
-        appointment.place = aData.place
-        appointment.start = sd.parse(aData.start)
-        appointment.end = sd.parse(aData.end)
-        appointment.mandatory = aData.mandatory ?: false
-        course.addToAppointments(appointment)
-        appointment.validate()
-        if(appointment.hasErrors()) {
-            log.debug(appointment.errors)
+        def aInstance = new Appointment()
+        aInstance.place = aData.place
+        aInstance.start = sd.parse(aData.start)
+        aInstance.end = sd.parse(aData.end)
+        aInstance.mandatory = aData.mandatory ?: false
+        course.addToAppointments(aInstance)
+        aInstance.validate()
+        if(aInstance.hasErrors()) {
+            log.debug(aInstance.errors)
             render status: NOT_ACCEPTABLE
             return
         } else {
-            appointment.save(flush: true)
-            respond appointment, [status: CREATED]
+            aInstance.save(flush: true)
+            respond aInstance, [status: CREATED]
         }
 
     }

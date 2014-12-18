@@ -1,13 +1,8 @@
 package woingenau.auth
 
 import grails.converters.JSON
-import grails.rest.RestfulController
 import grails.transaction.Transactional
-
-import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
-import static org.springframework.http.HttpStatus.OK
-import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.*
 
 @Transactional()
 class UserController {
@@ -49,16 +44,14 @@ class UserController {
     }
 
     def update(User userInstance) {
-        spring
         def userData = request.JSON
         if (userInstance == null) {
             render status: NOT_FOUND
             return
         }
-        userData.each{
+        userData.each {
             prop, val ->
-                log.debug("${prop} : ${val}")
-                if(prop in User.updatableProperties) {
+                if (prop in User.updatableProperties) {
                     userInstance[prop] = val
                 }
         }

@@ -2,21 +2,18 @@ package woingenau
 
 import grails.converters.JSON
 import woingenau.auth.User
-
-import static org.springframework.http.HttpStatus.OK
-import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.NOT_FOUND
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
+import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 
 class MemberController {
     static allowedMethods = [index: 'GET', save: 'POST', delete: 'DELETE']
     static responseFormats = ['json', 'xml']
+
     @Secured(['ROLE_USER'])
     def index() {
         JSON.use('thin')
-        if(params.courseId) {
-            log.debug('CourseID: '+ params.courseId)
+        if (params.courseId) {
+            log.debug('CourseID: ' + params.courseId)
             respond Course.get(params.courseId)?.members
         } else {
             render status: NOT_FOUND
@@ -34,7 +31,7 @@ class MemberController {
         }
 
         def isMember = uInstance in course.members
-        if(!isMember){
+        if (!isMember) {
             course.addToMembers(uInstance)
             course.save flush: true
             JSON.use('thin')
@@ -56,7 +53,7 @@ class MemberController {
             return
         }
         def isMember = uInstance in course.members
-        if(isMember){
+        if (isMember) {
             course.removeFromMembers(uInstance)
             course.save flush: true
             JSON.use('thin')

@@ -1,6 +1,5 @@
 package woingenau
 
-import grails.rest.Resource
 import woingenau.auth.User
 
 class Template {

@@ -2,7 +2,6 @@ package woingenau
 
 import grails.rest.RestfulController
 import woingenau.auth.User
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 

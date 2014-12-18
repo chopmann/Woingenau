@@ -1,5 +1,4 @@
 package woingenau
-import grails.rest.Resource
 
 class Appointment {
     Date start
@@ -9,10 +8,10 @@ class Appointment {
     static belongsTo = [course: Course]
     static constraints = {
         mandatory defaultValue: false
-        start(blank: false, validator: {val, obj ->
+        start(blank: false, validator: { val, obj ->
             val > obj.end ? false : true
         })
-        end(blank: false, validator: {val, obj ->
+        end(blank: false, validator: { val, obj ->
             val < obj.start ? false : true
         })
 

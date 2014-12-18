@@ -1,5 +1,5 @@
 package woingenau
-import grails.rest.Resource
+
 import woingenau.auth.User
 
 
@@ -14,7 +14,7 @@ class Course {
         creator blank: false
         lecturer blank: false
     }
-    static marshalling={
+    static marshalling = {
         shouldOutputVersion false
         shouldOutputClass false
         deep 'appointments'
