@@ -1,3 +1,4 @@
+import woingenau.Template
 import woingenau.auth.Role
 import woingenau.auth.User
 import woingenau.auth.UserRole
@@ -57,11 +58,17 @@ class BootStrap {
         UserRole.create(hans, userRole, true)
         assert UserRole.count() == 3
 
-
-
-
         assert Course.count() == 1
         assert course.members.size() == 3
+        def template1 = new Template(name: 'The Lightside', semester: 'WS15', major: 'Software Entwicklung', faculty: 'Informatik')
+        def template2 = new Template(name: 'The Darkside', semester: 'SS15', major: 'Software Entwicklung', faculty: 'Informatik')
+        template1.addToCourses(course)
+        template2.addToCourses(course)
+        template1.creator = jack
+        template2.creator = jack
+        template1.save(flush: true)
+        template2.save(flush: true)
+        assert Template.count() == 2
     }
     def destroy = {
     }

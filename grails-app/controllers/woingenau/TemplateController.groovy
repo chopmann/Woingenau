@@ -13,7 +13,22 @@ class TemplateController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Template.list(params), [status: OK]
+        def tProperties = Template.metaClass.properties*.name
+        def templateList = Template.withCriteria {
+            and{
+                params.each {prop, value ->
+                    if(tProperties.grep(prop) && value) {
+                        log.debug("${prop} : ${value}")
+                        ilike(prop, value)
+                    }
+                }
+            }
+            maxResults(params.max)
+        }
+        if (templateList)
+            respond templateList, [status: OK]
+        else
+            render status: NOT_FOUND
     }
 
     @Transactional
