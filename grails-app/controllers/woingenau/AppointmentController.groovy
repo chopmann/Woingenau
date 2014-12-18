@@ -37,9 +37,10 @@ class AppointmentController extends RestfulController{
         def aData = request.JSON
         def sd = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'")
         def appointment = new Appointment()
-        appointment.place = aData.place[0]
-        appointment.start = sd.parse(aData.start[0])
-        appointment.end = sd.parse(aData.end[0])
+        appointment.place = aData.place
+        appointment.start = sd.parse(aData.start)
+        appointment.end = sd.parse(aData.end)
+        appointment.mandatory = aData.mandatory ?: false
         course.addToAppointments(appointment)
         appointment.validate()
         if(appointment.hasErrors()) {

@@ -16,6 +16,7 @@ class BootStrap {
                     place: appointment.place,
                     start: appointment.start,
                     end: appointment.end,
+                    mandatory: appointment.mandatory
             ]
         }
 
