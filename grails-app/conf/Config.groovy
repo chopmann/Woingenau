@@ -10,32 +10,8 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
-grails.plugin.springsecurity.ui.encondePassword = true
-grails.plugin.springsecurity.roleHierarchy = '''
-   ROLE_ADMIN > ROLE_TEACHER
-   ROLE_TEACHER > ROLE_USER
-'''
-grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
-grails.plugin.springsecurity.interceptUrlMap = [
-	'/**':                  ['permitAll'],
-	'/index':             ['permitAll'],
-	'/index.gsp':         ['permitAll'],
-	'/assets*':         ['permitAll'],
-	'js*':          ['permitAll'],
-	'css*':         ['permitAll'],
-	'images*':      ['permitAll'],
-	'favicon.ico':    ['permitAll'],
-	'/plugins*':		  ['permitAll'],
-	'/login*':          ['permitAll'],
-	'/logout*':         ['permitAll'],
-	'/secure*':         ['permitAll'],
-/*	'/home*':           ['ROLE_ADMIN'],
-	'/role*':			  ['ROLE_ADMIN'],
-	'/user*':			  ['ROLE_ADMIN'],
-    '/courses*':         ['permitAll'],
-    '/appointments*':    ['ROLE_USER'],
-	'/finance*':        ['ROLE_FINANCE', 'isFullyAuthenticated()'],*/
- ]
+
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
@@ -144,19 +120,20 @@ log4j.main = {
     debug 'org.springframework.security'
     debug 'grails.app'
 }
-grails.plugin.springsecurity.useSecurityEventListener = true
-grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
-   println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
-}
 
 grails.plugin.springsecurity.password.algorithm='SHA-512'
+grails.plugin.springsecurity.ui.encondePassword = true
+grails.plugin.springsecurity.roleHierarchy = '''
+   ROLE_ADMIN > ROLE_TEACHER
+   ROLE_TEACHER > ROLE_USER
+'''
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'woingenau.auth.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'woingenau.auth.UserRole'
 grails.plugin.springsecurity.authority.className = 'woingenau.auth.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                              ['permitAll'],
+	'/**':                              ['permitAll'],
 	'/index':                         ['permitAll'],
 	'/index.gsp':                     ['permitAll'],
 	'/assets/**':                     ['permitAll'],
@@ -165,4 +142,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	'/**/favicon.ico':                ['permitAll']
 ]
-
+grails.plugin.springsecurity.rest.oauth.
+grails.plugin.springsecurity.rest.login.useJsonCredentials = true
+grails.plugin.springsecurity.rest.token.storage.useGorm = true
+grails.plugin.springsecurity.rest.token.storage.gorm.tokenDomainClassName = 'woingenau.auth.AuthenticationToken'
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+]

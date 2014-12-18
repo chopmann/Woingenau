@@ -29,6 +29,7 @@ class BootStrap {
                 ]
             }
         }
+
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def teacher = new Role(authority: 'ROLE_TEACHER').save(flush: true)

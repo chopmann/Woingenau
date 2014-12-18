@@ -2,7 +2,7 @@ package woingenau
 import grails.rest.Resource
 import woingenau.auth.User
 
-@Resource()
+
 class Course {
 
     String title

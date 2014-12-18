@@ -1,7 +1,6 @@
 package woingenau
 import grails.rest.Resource
 
-@Resource
 class Appointment {
     Date start
     Date end

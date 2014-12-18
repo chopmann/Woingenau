@@ -3,7 +3,6 @@ package woingenau
 import grails.rest.Resource
 import woingenau.auth.User
 
-@Resource
 class Template {
     String name
     static belongsTo = [creator: User]

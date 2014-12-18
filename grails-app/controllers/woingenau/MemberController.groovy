@@ -7,10 +7,12 @@ import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
+import grails.plugin.springsecurity.annotation.Secured
 
 class MemberController {
     static allowedMethods = [index: 'GET', save: 'POST', delete: 'DELETE']
     static responseFormats = ['json', 'xml']
+    @Secured(['ROLE_USER'])
     def index() {
         JSON.use('thin')
         if(params.courseId) {
@@ -45,7 +47,7 @@ class MemberController {
     }
 
     def delete() {
-        log.debug('CourseID: ' + params.courseId)
+        log.debug("CourseID:  ${params.courseId}")
         def mData = request.JSON
         def course = Course.get(params.courseId)
         def uInstance = User.get(mData.id)

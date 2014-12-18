@@ -20,6 +20,7 @@ class User {
     static hasMany = [lecturerOf: Course, creatorOf: Course]
     static mappedBy = [lecturerOf: 'lecturer', creatorOf: 'creator']
 	static transients = ['springSecurityService']
+    static updatableProperties = ['firstname', 'lastname', 'password', 'email']
 
 	static constraints = {
 		username size: 4..15, blank: false, unique: true
