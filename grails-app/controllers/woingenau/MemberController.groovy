@@ -1,7 +1,7 @@
 package woingenau
 
 import grails.converters.JSON
-import woingenau.auth.User
+import woingenau.auth.SecUser
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -24,7 +24,7 @@ class MemberController {
         log.debug('CourseID: ' + params.courseId)
         def mData = request.JSON
         def course = Course.get(params.courseId)
-        def uInstance = User.get(mData.id)
+        def uInstance = SecUser.get(mData.id)
         if (course == null || uInstance == null) {
             render status: NOT_FOUND
             return
@@ -37,7 +37,7 @@ class MemberController {
             JSON.use('thin')
             respond course.members, [status: CREATED]
         } else {
-            def msg = "User already member"
+            def msg = "SecUser already member"
             response.status = UNPROCESSABLE_ENTITY.value()
             render([error: msg] as JSON)
         }
@@ -47,7 +47,7 @@ class MemberController {
         log.debug("CourseID:  ${params.courseId}")
         def mData = request.JSON
         def course = Course.get(params.courseId)
-        def uInstance = User.get(mData.id)
+        def uInstance = SecUser.get(mData.id)
         if (course == null || uInstance == null) {
             render status: NOT_FOUND
             return
@@ -59,7 +59,7 @@ class MemberController {
             JSON.use('thin')
             respond course.members, [status: OK]
         } else {
-            def msg = "User not member"
+            def msg = "SecUser not member"
             response.status = NOT_FOUND.value()
             render([error: msg] as JSON)
         }

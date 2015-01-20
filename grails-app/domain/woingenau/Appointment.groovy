@@ -1,18 +1,18 @@
 package woingenau
 
 class Appointment {
-    Date start
-    Date end
+    Date startDate
+    Date endDate
     String place
     boolean mandatory
     static belongsTo = [course: Course]
     static constraints = {
         mandatory defaultValue: false
-        start(blank: false, validator: { val, obj ->
-            val > obj.end ? false : true
+        startDate(blank: false, validator: { val, obj ->
+            val > obj.endDate ? false : true
         })
-        end(blank: false, validator: { val, obj ->
-            val < obj.start ? false : true
+        endDate(blank: false, validator: { val, obj ->
+            val < obj.startDate ? false : true
         })
 
     }

@@ -62,6 +62,8 @@ grails {
 
 
 grails.converters.encoding = "UTF-8"
+grails.databinding.dateFormats = ["yyyy-MM-dd'T'hh:mm:ss'Z'"]
+
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
@@ -92,7 +94,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://thawing-stream-9266.herokuapp.com"
     }
 }
 
@@ -115,4 +117,35 @@ log4j.main = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+    debug 'org.springframework.security'
+    debug 'grails.app'
 }
+
+grails.plugin.springsecurity.password.algorithm='SHA-512'
+grails.plugin.springsecurity.ui.encondePassword = true
+grails.plugin.springsecurity.roleHierarchy = '''
+   ROLE_ADMIN > ROLE_TEACHER
+   ROLE_TEACHER > ROLE_USER
+'''
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'woingenau.auth.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'woingenau.auth.UserRole'
+grails.plugin.springsecurity.authority.className = 'woingenau.auth.SecRole'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/**':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/assets/**':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]
+grails.plugin.springsecurity.rest.oauth.
+grails.plugin.springsecurity.rest.login.useJsonCredentials = true
+grails.plugin.springsecurity.rest.token.storage.useGorm = true
+grails.plugin.springsecurity.rest.token.storage.gorm.tokenDomainClassName = 'woingenau.auth.AuthenticationToken'
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+]

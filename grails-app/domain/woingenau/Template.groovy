@@ -1,13 +1,13 @@
 package woingenau
 
-import woingenau.auth.User
+import woingenau.auth.SecUser
 
 class Template {
     String name
     String faculty
     String major
     String semester
-    static belongsTo = [creator: User]
+    static belongsTo = [creator: SecUser]
     static hasMany = [courses: Course]
     static constraints = {
         name blank: false

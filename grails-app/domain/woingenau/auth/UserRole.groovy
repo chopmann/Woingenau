@@ -6,8 +6,8 @@ class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1
 
-    User user
-    Role role
+    SecUser user
+    SecRole role
 
     boolean equals(other) {
         if (!(other instanceof UserRole)) {
@@ -27,30 +27,30 @@ class UserRole implements Serializable {
 
     static UserRole get(long userId, long roleId) {
         UserRole.where {
-            user == User.load(userId) &&
-                    role == Role.load(roleId)
+            user == SecUser.load(userId) &&
+                    role == SecRole.load(roleId)
         }.get()
     }
 
     static boolean exists(long userId, long roleId) {
         UserRole.where {
-            user == User.load(userId) &&
-                    role == Role.load(roleId)
+            user == SecUser.load(userId) &&
+                    role == SecRole.load(roleId)
         }.count() > 0
     }
 
-    static UserRole create(User user, Role role, boolean flush = false) {
+    static UserRole create(SecUser user, SecRole role, boolean flush = false) {
         def instance = new UserRole(user: user, role: role)
         instance.save(flush: flush, insert: true)
         instance
     }
 
-    static boolean remove(User u, Role r, boolean flush = false) {
+    static boolean remove(SecUser u, SecRole r, boolean flush = false) {
         if (u == null || r == null) return false
 
         int rowCount = UserRole.where {
-            user == User.load(u.id) &&
-                    role == Role.load(r.id)
+            user == SecUser.load(u.id) &&
+                    role == SecRole.load(r.id)
         }.deleteAll()
 
         if (flush) {
@@ -60,11 +60,11 @@ class UserRole implements Serializable {
         rowCount > 0
     }
 
-    static void removeAll(User u, boolean flush = false) {
+    static void removeAll(SecUser u, boolean flush = false) {
         if (u == null) return
 
         UserRole.where {
-            user == User.load(u.id)
+            user == SecUser.load(u.id)
         }.deleteAll()
 
         if (flush) {
@@ -72,11 +72,11 @@ class UserRole implements Serializable {
         }
     }
 
-    static void removeAll(Role r, boolean flush = false) {
+    static void removeAll(SecRole r, boolean flush = false) {
         if (r == null) return
 
         UserRole.where {
-            role == Role.load(r.id)
+            role == SecRole.load(r.id)
         }.deleteAll()
 
         if (flush) {
@@ -85,7 +85,7 @@ class UserRole implements Serializable {
     }
 
     static constraints = {
-        role validator: { Role r, UserRole ur ->
+        role validator: { SecRole r, UserRole ur ->
             if (ur.user == null) return
             boolean existing = false
             UserRole.withNewSession {

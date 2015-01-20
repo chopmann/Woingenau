@@ -1,7 +1,7 @@
 package woingenau
 
 import grails.rest.RestfulController
-import woingenau.auth.User
+import woingenau.auth.SecUser
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -18,12 +18,16 @@ class CourseController extends RestfulController {
         def courseData = request.JSON
         def course = new Course()
         course.title = courseData.title
-        course.creator = User.get(courseData.creator.id)
-        course.lecturer = User.get(courseData.lecturer.id)
+        course.creator = SecUser.get(courseData.creator.id)
+        course.lecturer = SecUser.get(courseData.lecturer.id)
         courseData.members.each{memberData ->
-            course.addToMembers(User.get(memberData.id))
+            course.addToMembers(SecUser.get(memberData.id))
         }
         courseData.appointments.each{appointmentData ->
+            appointmentData["startDate"] = appointmentData["start"]
+            appointmentData.remove("start")
+            appointmentData["endDate"] = appointmentData["end"]
+            appointmentData.remove("end")
             def appointment = new Appointment(appointmentData)
             course.addToAppointments(appointment)
         }
@@ -48,8 +52,8 @@ class CourseController extends RestfulController {
             return
         }
         course.title = courseData.title
-        course.creator = User.get(courseData.creator.id)
-        course.lecturer = User.get(courseData.lecturer.id)
+        course.creator = SecUser.get(courseData.creator.id)
+        course.lecturer = SecUser.get(courseData.lecturer.id)
         course.validate()
         if(course.hasErrors()) {
             log.debug(course.errors)

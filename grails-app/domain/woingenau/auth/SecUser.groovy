@@ -2,7 +2,7 @@ package woingenau.auth
 
 import woingenau.Course
 
-class User {
+class SecUser {
 
     transient springSecurityService
 
@@ -34,7 +34,7 @@ class User {
         password column: '`password`'
     }
 
-    Set<Role> getAuthorities() {
+    Set<SecRole> getAuthorities() {
         UserRole.findAllByUser(this).collect { it.role }
     }
 

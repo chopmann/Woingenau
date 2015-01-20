@@ -33,8 +33,8 @@ class AppointmentController extends RestfulController{
         def sd = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'")
         def aInstance = new Appointment()
         aInstance.place = aData.place
-        aInstance.start = sd.parse(aData.start)
-        aInstance.end = sd.parse(aData.end)
+        aInstance.startDate = sd.parse(aData.start)
+        aInstance.endDate = sd.parse(aData.end)
         aInstance.mandatory = aData.mandatory ?: false
         course.addToAppointments(aInstance)
         aInstance.validate()

@@ -14,10 +14,10 @@ class UserController {
         log.debug(springSecurityService.principal)
         JSON.use('thin')
         params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), [status: OK]
+        respond SecUser.list(params), [status: OK]
     }
 
-    def show(User userInstance) {
+    def show(SecUser userInstance) {
         JSON.use('thin')
         log.debug(userInstance.password)
         respond userInstance, [status: OK]
@@ -26,7 +26,7 @@ class UserController {
     def save() {
         JSON.use('thin')
         def userData = request.JSON
-        def userInstance = new User(firstname: userData.firstname,
+        def userInstance = new SecUser(firstname: userData.firstname,
                 lastname: userData.lastname,
                 username: userData.username,
                 password: userData.password,
@@ -43,7 +43,7 @@ class UserController {
         }
     }
 
-    def update(User userInstance) {
+    def update(SecUser userInstance) {
         def userData = request.JSON
         if (userInstance == null) {
             render status: NOT_FOUND
@@ -51,7 +51,7 @@ class UserController {
         }
         userData.each {
             prop, val ->
-                if (prop in User.updatableProperties) {
+                if (prop in SecUser.updatableProperties) {
                     userInstance[prop] = val
                 }
         }

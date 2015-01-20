@@ -1,122 +1,158 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
-		<style type="text/css" media="screen">
-			#status {
-				background-color: #eee;
-				border: .2em solid #fff;
-				margin: 2em 2em 1em;
-				padding: 1em;
-				width: 12em;
-				float: left;
-				-moz-box-shadow: 0px 0px 1.25em #ccc;
-				-webkit-box-shadow: 0px 0px 1.25em #ccc;
-				box-shadow: 0px 0px 1.25em #ccc;
-				-moz-border-radius: 0.6em;
-				-webkit-border-radius: 0.6em;
-				border-radius: 0.6em;
-			}
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Woingenau Test Server</title>
+<asset:stylesheet src="main.css"/>
+</head>
 
-			.ie6 #status {
-				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
-			}
+<body>
+<article class="markdown-body">
+    <h1>Test-Server (Woingenau Backend)</h1>
+    <h3><a href="http://thawing-stream-9266.herokuapp.com/">http://thawing-stream-9266.herokuapp.com/</a></h3>
+    <h2>|   GET    | /courses                                        | Action: index            | </h2>
+    <p>Liefert - Liste (format unten):</p>
+    <h2></a>|   GET    | /courses/${'${id}'} |Action: show|</h2>
+    <p>Liefert ein Element</p>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;appointments&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;place&quot;</span><span class="p">:</span><span class="s2">&quot;Empire&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;start&quot;</span><span class="p">:</span><span class="s2">&quot;2014-12-08T20:21:03Z&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;end&quot;</span><span class="p">:</span><span class="s2">&quot;2014-12-08T20:21:03Z&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;creator&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;lecturer&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;members&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">3</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;The Force 101&quot;</span>
+<span class="p">}</span>
+</pre></div>
 
-			#status ul {
-				font-size: 0.9em;
-				list-style-type: none;
-				margin-bottom: 0.6em;
-				padding: 0;
-			}
 
-			#status li {
-				line-height: 1.3;
-			}
 
-			#status h1 {
-				text-transform: uppercase;
-				font-size: 1.1em;
-				margin: 0 0 0.3em;
-			}
+    <h2>|   POST   | /courses                                                  | Action: save             |
+    </h2>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;appointments&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;place&quot;</span><span class="p">:</span><span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;start&quot;</span><span class="p">:</span><span class="s2">&quot;2014-12-08T20:21:03Z&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;end&quot;</span><span class="p">:</span><span class="s2">&quot;2014-12-08T20:21:03Z&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;creator&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;lecturer&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;members&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">3</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;The Force 101&quot;</span>
+<span class="p">}</span>
+</pre></div>
+    <p>Speichert ein neuer Course in der DB</p>
 
-			#page-body {
-				margin: 2em 1em 1.25em 18em;
-			}
+    <h2>|   PUT    | /courses/${'${id}'}                                            | Action: update           |</h2>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;creator&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;lecturer&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;The Force 102&quot;</span>
+<span class="p">}</span>
+</pre></div>
 
-			h2 {
-				margin-top: 1em;
-				margin-bottom: 0.3em;
-				font-size: 1em;
-			}
 
-			p {
-				line-height: 1.5;
-				margin: 0.25em 0;
-			}
 
-			#controller-list ul {
-				list-style-position: inside;
-			}
 
-			#controller-list li {
-				line-height: 1.3;
-				list-style-position: inside;
-				margin: 0.25em 0;
-			}
+    <h2>
+         </a>|   GET    | /courses/${'${courseId}'}/members                              | Action: index            |
+    </h2>
+<div class="highlight"><pre><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;hans&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="s2">&quot;hans&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="s2">&quot;hodor&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;jack&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="s2">&quot;jack&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="s2">&quot;bauer&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;joda&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="s2">&quot;joda&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="s2">&quot;maier&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+    <p>enabled: true|false ist ob der user freigeschaltet ist. Sollte euch nicht interessieren</p>
 
-			@media screen and (max-width: 480px) {
-				#status {
-					display: none;
-				}
+    <h2>
+        <a id="user-content----post----coursescourseidmembers-------------------------------action-save-------------"
+           class="anchor"
+           href="#---post----coursescourseidmembers-------------------------------action-save-------------"
+           aria-hidden="true"><span class="octicon octicon-link"></span>
+        </a>|   POST   | /courses/${'${courseId}'}/members                              | Action: save             |
+    </h2>
 
-				#page-body {
-					margin: 0 1em 1em;
-				}
+    <p>Fügt ein neue User zum Course</p>
 
-				#page-body h1 {
-					margin-top: 0;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
-			<h1>Application Status</h1>
-			<ul>
-				<li>App version: <g:meta name="app.version"/></li>
-				<li>Grails version: <g:meta name="app.grails.version"/></li>
-				<li>Groovy version: ${GroovySystem.getVersion()}</li>
-				<li>JVM version: ${System.getProperty('java.version')}</li>
-				<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
-				<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-				<li>Domains: ${grailsApplication.domainClasses.size()}</li>
-				<li>Services: ${grailsApplication.serviceClasses.size()}</li>
-				<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-			</ul>
-			<h1>Installed Plugins</h1>
-			<ul>
-				<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-					<li>${plugin.name} - ${plugin.version}</li>
-				</g:each>
-			</ul>
-		</div>
-		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
+<div class="highlight"><pre><span class="p">{</span>
+<span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">}</span>
+</pre></div>
 
-			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-				</ul>
-			</div>
-		</div>
-	</body>
+
+    <h2>
+        <a id="user-content---delete---coursescourseidmembers-action-delete" class="anchor"
+           href="#--delete---coursescourseidmembers-action-delete" aria-hidden="true"><span
+                class="octicon octicon-link"></span>
+        </a>|  DELETE  | /courses/'${'${courseId}'}/members |Action: delete|</h2>
+
+    <p>Analog zu save</p>
+
+    <h2>
+        <a id="user-content-es-gilt---action-save-ist-keine-id-notwendig-es-wird-generiert"
+           class="anchor" href="#es-gilt---action-save-ist-keine-id-notwendig-es-wird-generiert"
+           aria-hidden="true"><span class="octicon octicon-link"></span>
+        </a>Es gilt--&gt; Action: save ist keine id notwendig, es wird generiert</h2>
+
+</article>
+</body>
 </html>

@@ -1,6 +1,6 @@
 package woingenau.auth
 
-class Role {
+class SecRole {
 
     String authority
 

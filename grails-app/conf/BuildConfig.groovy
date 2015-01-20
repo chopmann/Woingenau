@@ -54,7 +54,7 @@ grails.project.dependency.resolution = {
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
         compile 'commons-beanutils:commons-beanutils:1.8.3'
-        runtime 'postgresql:postgresql:8.4-702.jdbc3'
+        runtime  'org.postgresql:postgresql:9.3-1102-jdbc41'
     }
 
     plugins {
@@ -75,6 +75,10 @@ grails.project.dependency.resolution = {
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.5.5" // or ":hibernate:3.6.10.17"
         runtime ":database-migration:1.4.0"
+
+        compile ':heroku:1.0.1'
+        compile ':cloud-support:1.0.11'
+        compile ":postgresql-extensions:4.3.0"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

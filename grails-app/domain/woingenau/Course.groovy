@@ -1,13 +1,13 @@
 package woingenau
 
-import woingenau.auth.User
+import woingenau.auth.SecUser
 
 
 class Course {
 
     String title
-    static belongsTo = [lecturer: User, creator: User]
-    static hasMany = [appointments: Appointment, members: User]
+    static belongsTo = [lecturer: SecUser, creator: SecUser]
+    static hasMany = [appointments: Appointment, members: SecUser]
 
     static constraints = {
         title blank: false
