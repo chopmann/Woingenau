@@ -44,6 +44,8 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+		mavenRepo "http://repo.spring.io/milestone/"
+        mavenRepo "http://repo.grails.org/grails/core"
     }
 
     dependencies {
@@ -51,6 +53,8 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
+        compile 'commons-beanutils:commons-beanutils:1.8.3'
+        runtime 'postgresql:postgresql:8.4-702.jdbc3'
     }
 
     plugins {
@@ -62,21 +66,21 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.7'
         compile ":asset-pipeline:1.9.6"
 		compile ':spring-security-core:2.0-RC4'
-		compile ":spring-security-ui:1.0-RC2"
+        compile ":spring-security-rest:latest.release", {
+            excludes 'spring-security-core', 'cors'
+        }
+        compile ":marshallers:0.6"
+
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.5.5" // or ":hibernate:3.6.10.17"
         runtime ":database-migration:1.4.0"
-        runtime ":jquery:1.11.1"
-				
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
-		
-		//Bootstrap Plugin
-		runtime ':twitter-bootstrap:3.2.0.2'
+
     }
 }
